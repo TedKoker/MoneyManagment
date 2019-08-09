@@ -95,7 +95,9 @@ namespace MoneyManagment.Controllers
                 ResonForExpenderOrIncome = expenderOrIncome,
                 TheReason=reson,
                 Id= UserManager.GetUserId(HttpContext.User)
-        };
+            };
+            Context.ResonsForExpenderAndIncome.Add(newReson);
+            Context.SaveChanges();
             return RedirectToAction("newOfAddingInfo");
         }
     }

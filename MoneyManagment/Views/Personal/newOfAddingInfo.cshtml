@@ -117,7 +117,13 @@
     }
 
     function SendToDatabase(element) {
-        var elementVal = element.previousSibling.value; //the resons...
+        var reson = element.previousSibling.value;
+        var expenderOrIncome;
+        if (document.getElementById("expender").checked)
+            expenderOrIncome = "expender";
+        else
+            expenderOrIncome = "income";
+        location.replace("/Personal/AddToReasonsList?reson=" + reson+"&&expenderOrIncome="+expenderOrIncome);
     }
 
     function Minimize(element) {
