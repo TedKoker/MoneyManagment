@@ -1,0 +1,55 @@
+﻿@{
+    List<ResonsForExpenderAndIncome> expenders = ViewBag.Expender;
+    List<ResonsForExpenderAndIncome> incomes = ViewBag.Income;
+    DateTime t = DateTime.Now;
+}
+
+@using (Html.BeginForm("NewItem", "Personal"))
+{
+
+    <span>Date:</span> <input type="date" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" /><br /><br />
+
+
+    <span>Expender or Income ?</span><br />
+    <input type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" /><span>Expender</span>
+    <select name="type" id="expenders">
+            @foreach (ResonsForExpenderAndIncome expender in expenders)
+            {
+                <option>@expender.TheReason</option>
+            }
+            
+        </select><br />
+    <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" /><span>Income</span>
+    <select name="type" id="incomes" style="visibility:hidden">
+            @foreach(ResonsForExpenderAndIncome income in incomes)
+            {
+                <option>@income.TheReason</option>
+            }
+        </select><br />
+    <br />
+     
+    
+
+    <br /><br />
+    <span>sum:  </span> <input type="number" name="sum" />
+    <br /><br />
+    <span>Further Information:  </span><input type="text" name="furtherInformation" /><br /><br />
+    <input type="submit" value="submit" />
+
+
+    <script>
+    var expenders = document.getElementById("expenders");
+    var incomes = document.getElementById("incomes");
+
+        function ShowCorrectSelect(element) {
+            if (element.value === "expender") {
+                expenders.style.visibility = "visible";
+                incomes.style.visibility = "hidden";
+            }
+            if (element.value === "income") {
+                incomes.style.visibility = "visible";
+                expenders.style.visibility = "hidden";
+            }
+        }
+    </script>
+}

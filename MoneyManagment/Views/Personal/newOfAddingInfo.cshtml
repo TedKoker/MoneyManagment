@@ -1,0 +1,136 @@
+﻿<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+<!--
+        In CheckThis(element), do the InsertBefore() func to insert the text after the element.
+        search the next element, and put the textnode before him
+
+-->
+
+
+@using (Html.BeginForm("NewItem", "Personal", FormMethod.Post, new { onsubmit = "return IsLegalForm()" }))
+{
+<table>
+    <tr>
+        <td><span>Date:</span></td>
+        <td><input onblur="CheckThis(this)" type="date" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" /></td>
+    </tr>
+    <tr>
+        <td>Expender or Income ?</td>
+        <td><input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
+        Expender
+        <br />
+            <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
+            Income
+        </td>
+    </tr>
+    <tr>
+        <td>Please select a reason</td>
+        <td><select id="type" name="type"></select>
+        <p style="display:inline" onclick="AddToList(this)"> add</p></td>
+    </tr> 
+    <tr>
+        <td>Sum: </td>
+        <td><input onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
+    </tr>
+    <tr>
+        <td>Further information:</td>
+        <td><textarea rows="4" cols="50" name="furtherInformation"></textarea></td>
+    </tr>
+    <tr>
+        <td><input type="submit" value="submit" /></td>
+    </tr>
+</table>
+    <script>
+        var test = document.getElementById("expender");
+        ShowCorrectSelect(test);
+        function ShowCorrectSelect(element) {
+            $("#type").empty();
+            let urlLink;
+            if (element.value == "expender")
+                urlLink = "/Personal/ExpenderList";
+            else
+                urlLink = "/Personal/IncomeList"
+            $.ajax({
+                url: urlLink,
+                cache: false,
+                success: function (res) {
+                    console.log(res);
+                    $.each(res, function (i, value) {
+                        $("#type").append(new Option(value.theReason, value.theReason));
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                }
+            });
+
+        }
+    function IsLegalForm() {
+        if (document.getElementById("req") === null)
+            return true;
+        else
+            return false;
+        }
+
+    function CheckThis(element) {
+        if (element.value === null || element.value === "") {
+            if (element.parentElement.lastChild === element) {
+                let text = document.createTextNode("* This field is required");
+                let par = document.createElement("p");
+                par.setAttribute("id", "req");
+                par.appendChild(text);
+                element.parentElement.appendChild(par);
+            }
+            }
+            else {
+                let par = element.parentElement.lastChild;
+                if(par.id==="req")
+                    element.parentElement.removeChild(par);
+            }
+
+        }
+    function AddToList(element) {
+        var tableRow = element.parentNode;
+        tableRow.removeChild(element);
+
+        var textInput = document.createElement("input");
+        textInput.setAttribute("type", "text");
+        textInput.setAttribute("id", "removeThis");
+
+        var addButton = document.createElement("p");
+        addButton.appendChild(document.createTextNode("add to list"));
+        addButton.setAttribute("style", "display:inline");
+        addButton.setAttribute("onclick", "SendToDatabase(this)");
+        addButton.setAttribute("id", "removeThis");
+
+        var deleteButton = document.createElement("p");
+        deleteButton.appendChild(document.createTextNode("<--"));
+        deleteButton.setAttribute("style", "display:inline");
+        deleteButton.setAttribute("onclick", "Minimize(this)");
+        deleteButton.setAttribute("id", "removeThis");
+
+        tableRow.appendChild(textInput);
+        tableRow.appendChild(addButton);
+        tableRow.appendChild(deleteButton);
+    }
+
+    function SendToDatabase(element) {
+        var elementVal = element.previousSibling.value; //the resons...
+    }
+
+    function Minimize(element) {
+        var tableRow = element.parentNode;
+        while (document.getElementById("removeThis") !== null)
+            tableRow.removeChild(document.getElementById("removeThis"));
+
+        var par = document.createElement("p");
+        par.appendChild(document.createTextNode("add"));
+        par.setAttribute("style", "display:inline");
+        par.setAttribute("onclick", "AddToList(this)");
+
+        tableRow.appendChild(par);
+    }
+    </script>
+}

@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-MoneyManagment-502405ED-1632-4096-8794-6D16B6BD8CB6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190709192600_test.cs" />
+    <Compile Remove="Data\Migrations\20190709192600_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190709192652_TestNumTwo.cs" />
+    <Compile Remove="Data\Migrations\20190709192652_TestNumTwo.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190709194916_updated.cs" />
+    <Compile Remove="Data\Migrations\20190709194916_updated.Designer.cs" />
+    <Compile Remove="Migrations\20190720082126_new.cs" />
+    <Compile Remove="Migrations\20190720082126_new.Designer.cs" />
+    <Compile Remove="Migrations\20190720104616_Users.cs" />
+    <Compile Remove="Migrations\20190720104616_Users.Designer.cs" />
+    <Compile Remove="Migrations\20190720170541_users.cs" />
+    <Compile Remove="Migrations\20190720170541_users.Designer.cs" />
+    <Compile Remove="Migrations\20190720171152_users.cs" />
+    <Compile Remove="Migrations\20190720171152_users.Designer.cs" />
+    <Compile Remove="Migrations\20190720171554_Users.cs" />
+    <Compile Remove="Migrations\20190720171554_Users.Designer.cs" />
+    <Compile Remove="Migrations\20190720172642_Users.cs" />
+    <Compile Remove="Migrations\20190720172642_Users.Designer.cs" />
+    <Compile Remove="Migrations\20190722202155_test.cs" />
+    <Compile Remove="Migrations\20190722202155_test.Designer.cs" />
+    <Compile Remove="Migrations\20190722202241_UsersAndInformation.cs" />
+    <Compile Remove="Migrations\20190722202241_UsersAndInformation.Designer.cs" />
+    <Compile Remove="Migrations\20190726213031_UsersAndInfoAndRoles.cs" />
+    <Compile Remove="Migrations\20190726213031_UsersAndInfoAndRoles.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
+  </ItemGroup>
+
+</Project>

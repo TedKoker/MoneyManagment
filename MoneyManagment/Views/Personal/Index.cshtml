@@ -1,0 +1,25 @@
+﻿@{ 
+    List<UserInfo> listOfAll = ViewBag.listOfAll;
+}
+
+<table>
+    @foreach(UserInfo info in listOfAll)
+    {
+        <tr>
+            <td>@info.Date.ToString("dd/MM/yy")</td>
+            <td>@info.Sum</td>
+            <td>@info.ExpenderOrIncome</td>
+            <td>@info.Type</td>
+            <td>@info.FurtherInformation</td>
+            <td onclick="DeleteFromUserInfo(this)">Click To Delete</td>
+            <td style="visibility:hidden">@info.InfoID</td>
+        </tr>
+    }
+</table>
+
+<script>
+    function DeleteFromUserInfo(element) {
+        var infoId = element.nextSibling.nextSibling.innerHTML;
+        location.replace("/Personal/DeleteFromUserrInfo?infoId=" + infoId);
+    }
+</script>
