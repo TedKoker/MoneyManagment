@@ -38,7 +38,7 @@
 
 <script>
     function DeleteFromUserInfo(element) {
-        var infoId = element.nextSibling.nextSibling.innerHTML;
+        var infoId = element.parentNode.nextSibling.nextSibling.innerHTML;
         location.replace("/Personal/DeleteFromUserrInfo?infoId=" + infoId);
     }
 
