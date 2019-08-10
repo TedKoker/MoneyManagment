@@ -1,9 +1,28 @@
 ﻿@{ 
     List<UserInfo> listOfAll = ViewBag.listOfAll;
 }
+<style>
+    tr:hover {
+    background-color: antiquewhite;
+    }
+    tr:hover.warning{
+        background-color:red;
+        color:white;
+        font-weight:bold;
+        
+    }
 
-<table>
-    @foreach(UserInfo info in listOfAll)
+    tr:hover.warning a{
+        cursor: pointer;
+    }
+
+    table{
+        cursor:default;
+    }
+</style>
+
+<table style="width:100%;" class="table" >
+    @foreach (UserInfo info in listOfAll)
     {
         <tr>
             <td>@info.Date.ToString("dd/MM/yy")</td>
@@ -11,7 +30,7 @@
             <td>@info.ExpenderOrIncome</td>
             <td>@info.Type</td>
             <td>@info.FurtherInformation</td>
-            <td onclick="DeleteFromUserInfo(this)">Click To Delete</td>
+            <td onmouseover="TurnToWarning(this)" onmouseout="OffWarning(this)"><a onclick="DeleteFromUserInfo(this)">Click To Delete</a></td>
             <td style="visibility:hidden">@info.InfoID</td>
         </tr>
     }
@@ -21,5 +40,15 @@
     function DeleteFromUserInfo(element) {
         var infoId = element.nextSibling.nextSibling.innerHTML;
         location.replace("/Personal/DeleteFromUserrInfo?infoId=" + infoId);
+    }
+
+    function TurnToWarning(element) {
+        var newStyle = element.parentNode;
+        newStyle.setAttribute("class", "warning");
+    }
+
+    function OffWarning(element) {
+        var newStyle = element.parentNode;
+        newStyle.removeAttribute("class");
     }
 </script>
