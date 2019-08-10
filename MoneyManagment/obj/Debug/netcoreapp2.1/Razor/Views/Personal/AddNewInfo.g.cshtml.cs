@@ -100,7 +100,7 @@ WriteAttributeValue("", 330, DateTime.Now.ToString("yyyy-MM-dd"), 330, 36, false
             WriteLiteral("                ");
             EndContext();
             BeginContext(720, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "58085e4164084af3bc5ab35a2eabc241", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fe8568e5a61241e396ae9f72244b0bac", async() => {
                 BeginContext(729, 18, false);
 #line 18 "C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\Views\Personal\AddNewInfo.cshtml"
                    Write(expender.TheReason);
@@ -141,7 +141,7 @@ WriteAttributeValue("", 330, DateTime.Now.ToString("yyyy-MM-dd"), 330, 36, false
             WriteLiteral("                ");
             EndContext();
             BeginContext(1096, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d8f4d748d9294e51b0a00d61fec7d5ca", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7de191b59fb940e2a3a7e8fa0d95d644", async() => {
                 BeginContext(1105, 16, false);
 #line 26 "C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\Views\Personal\AddNewInfo.cshtml"
                    Write(income.TheReason);

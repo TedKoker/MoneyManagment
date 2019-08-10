@@ -1,5 +1,7 @@
 ﻿@{ 
     List<UserInfo> listOfAll = ViewBag.listOfAll;
+    int dateMounth = ViewBag.dateMounth;
+    int dateYear = ViewBag.dateYear;
 }
 <style>
     tr:hover {
@@ -19,6 +21,9 @@
     table{
         cursor:default;
     }
+    i {
+        cursor: pointer;
+    }
 </style>
 
 <table style="width:100%;" class="table" >
@@ -36,7 +41,17 @@
     }
 </table>
 
+<div>
+    <i class="fas fa-angle-double-left" style="cursor:pointer" onclick="prevPage()">  </i>
+    <span id="mounth">@dateMounth</span>/<span id="year">@dateYear</span>
+    @if (dateMounth < DateTime.Now.Month || dateYear<DateTime.Now.Year)
+    {
+        <i class="fas fa-angle-double-right" style="cursor:pointer" onclick="nextPage()"></i>
+    }
+</div>
+
 <script>
+    
     function DeleteFromUserInfo(element) {
         var infoId = element.parentNode.nextSibling.nextSibling.innerHTML;
         location.replace("/Personal/DeleteFromUserrInfo?infoId=" + infoId);
@@ -50,5 +65,24 @@
     function OffWarning(element) {
         var newStyle = element.parentNode;
         newStyle.removeAttribute("class");
+        }
+
+    function prevPage() {
+        var toMounth
+        var toYear;
+        if (document.getElementById('mounth').innerHTML > 1) {
+            toMounth = document.getElementById('mounth').innerHTML - 1;
+            toYear = document.getElementById('year').innerHTML;
+        }
+        else {
+            toMounth = 12;
+            toYear=parseInt(document.getElementById('year').innerHTML)-1
+        }
+        location.replace('/personal/index?mounth=' + toMounth + "&&year=" + toYear);
+    }
+
+    function nextPage() {
+        var toMounth = parseInt(document.getElementById('mounth').innerHTML) + 1;
+        location.replace('/personal/index?mounth=' + toMounth);
     }
 </script>
