@@ -18,30 +18,31 @@
         cursor: pointer;
     }
 
-    table{
-        cursor:default;
-    }
     i {
         cursor: pointer;
     }
+    
+    body{
+        cursor: default;
+    }
 </style>
 
-<table style="width:100%;" class="table" >
-    @foreach (UserInfo info in listOfAll)
-    {
-        <tr>
-            <td>@info.Date.ToString("dd/MM/yy")</td>
-            <td>@info.Sum</td>
-            <td>@info.ExpenderOrIncome</td>
-            <td>@info.Type</td>
-            <td>@info.FurtherInformation</td>
-            <td onmouseover="TurnToWarning(this)" onmouseout="OffWarning(this)"><a onclick="DeleteFromUserInfo(this)">Click To Delete</a></td>
-            <td style="visibility:hidden">@info.InfoID</td>
-        </tr>
-    }
-</table>
+    <table style="width:100%; font-size:1.1em; text-align: center;" class="table">
+        @foreach (UserInfo info in listOfAll)
+        {
+            <tr>
+                <td width="10%">@info.Date.ToString("dd/MM/yy")</td>
+                <td width="10%">@info.Sum</td>
+                <td width="10%">@info.ExpenderOrIncome</td>
+                <td width="15%">@info.Type</td>
+                <td width="40%">@info.FurtherInformation</td>
+                <td width="15%" onmouseover="TurnToWarning(this)" onmouseout="OffWarning(this)"><a onclick="DeleteFromUserInfo(this)">Click To Delete</a></td>
+                <td style="visibility:hidden">@info.InfoID</td>
+            </tr>
+        }
+    </table>
 
-<div>
+<div style="text-align: center"><!--Fix possition through this <div>-->
     <i class="fas fa-angle-double-left" style="cursor:pointer" onclick="prevPage()">  </i>
     <span id="mounth">@dateMounth</span>/<span id="year">@dateYear</span>
     @if (dateMounth < DateTime.Now.Month || dateYear<DateTime.Now.Year)
