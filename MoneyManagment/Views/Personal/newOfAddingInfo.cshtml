@@ -1,19 +1,18 @@
 ﻿<script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-
-<!--
-        In CheckThis(element), do the InsertBefore() func to insert the text after the element.
-        search the next element, and put the textnode before him
-
--->
-
+<style>
+    body{
+        background-color:#ccf2ff;
+    }
+</style>
 
 @using (Html.BeginForm("NewItem", "Personal", FormMethod.Post, new { onsubmit = "return IsLegalForm()" }))
 {
-<table>
+<table class="table" style="background-color:white">
     <tr>
         <td><span>Date:</span></td>
+        <!--enter the fool calender-->
         <td><input onblur="CheckThis(this)" type="date" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" /></td>
     </tr>
     <tr>

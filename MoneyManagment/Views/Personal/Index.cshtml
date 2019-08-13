@@ -27,6 +27,7 @@
     }
 </style>
 
+<div style="min-height:300px;">
     <table style="width:100%; font-size:1.1em; text-align: center;" class="table">
         @foreach (UserInfo info in listOfAll)
         {
@@ -41,6 +42,7 @@
             </tr>
         }
     </table>
+</div>
 
 <div style="text-align: center"><!--Fix possition through this <div>-->
     <i class="fas fa-angle-double-left" style="cursor:pointer" onclick="prevPage()">  </i>
@@ -69,8 +71,8 @@
         }
 
     function prevPage() {
-        var toMounth
-        var toYear;
+        let toMounth
+        let toYear;
         if (document.getElementById('mounth').innerHTML > 1) {
             toMounth = document.getElementById('mounth').innerHTML - 1;
             toYear = document.getElementById('year').innerHTML;
@@ -83,7 +85,16 @@
     }
 
     function nextPage() {
-        var toMounth = parseInt(document.getElementById('mounth').innerHTML) + 1;
-        location.replace('/personal/index?mounth=' + toMounth);
+        let toMounth
+        let toYear;
+        if (document.getElementById('mounth').innerHTML < 12) {
+            toMounth = parseInt(document.getElementById('mounth').innerHTML) + 1;
+            toYear = document.getElementById('year').innerHTML;
+        }
+        else {
+            toMounth = 1;
+            toYear=parseInt(document.getElementById('year').innerHTML)+1
+        }
+        location.replace('/personal/index?mounth=' + toMounth + "&&year=" + toYear);
     }
 </script>
