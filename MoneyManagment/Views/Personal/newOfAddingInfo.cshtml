@@ -4,6 +4,7 @@
 <style>
     body{
         background-color:#ccf2ff;
+        cursor: default;
     }
 </style>
 
@@ -13,32 +14,31 @@
     <tr>
         <td><span>Date:</span></td>
         <!--enter the fool calender-->
-        <td><input onblur="CheckThis(this)" type="date" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" /></td>
+        <td><input class="form-control" onblur="CheckThis(this)" type="date" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" /></td>
     </tr>
     <tr>
         <td>Expender or Income ?</td>
-        <td><input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
-        Expender
-        <br />
-            <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
+        <td><input id="expender"  type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
+        Expender<br />
+            <input type="radio"  name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
             Income
         </td>
     </tr>
     <tr>
         <td>Please select a reason</td>
-        <td><select id="type" name="type"></select>
+        <td><select id="type" name="type" class="browser-default custom-select"></select>
         <p style="display:inline" onclick="AddToList(this)"> add</p></td>
     </tr> 
     <tr>
         <td>Sum: </td>
-        <td><input onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
+        <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
     </tr>
     <tr>
         <td>Further information:</td>
-        <td><textarea rows="4" cols="50" name="furtherInformation"></textarea></td>
+        <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
     </tr>
     <tr>
-        <td><input type="submit" value="submit" /></td>
+        <td><input type="submit" class="btn btn-primary" value="submit" /></td>
     </tr>
 </table>
     <script>
@@ -97,6 +97,8 @@
 
         var textInput = document.createElement("input");
         textInput.setAttribute("type", "text");
+        textInput.setAttribute("class", "form-control");
+        textInput.setAttribute("placeholder", "Enter the new reson");
         textInput.setAttribute("id", "removeThis");
 
         var addButton = document.createElement("p");
@@ -106,13 +108,17 @@
         addButton.setAttribute("id", "removeThis");
 
         var deleteButton = document.createElement("p");
-        deleteButton.appendChild(document.createTextNode("<--"));
+        deleteButton.appendChild(document.createTextNode("Undo"));
         deleteButton.setAttribute("style", "display:inline");
         deleteButton.setAttribute("onclick", "Minimize(this)");
         deleteButton.setAttribute("id", "removeThis");
 
+        var breake = document.createElement("br");
+        breake.setAttribute("id", "removeThis");
+
         tableRow.appendChild(textInput);
         tableRow.appendChild(addButton);
+        tableRow.appendChild(breake);
         tableRow.appendChild(deleteButton);
     }
 
