@@ -6,6 +6,11 @@
         background-color:#ccf2ff;
         cursor: default;
     }
+
+    p.req{
+        color:rgba(255, 5, 5, 1);
+    }
+    
 </style>
 
 @using (Html.BeginForm("NewItem", "Personal", FormMethod.Post, new { onsubmit = "return IsLegalForm()" }))
@@ -14,11 +19,13 @@
     <tr>
         <td><span>Date:</span></td>
         <!--enter the fool calender-->
-        <td><input class="form-control" onblur="CheckThis(this)" type="date" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" /></td>
+        <td>
+            <input type="date" class="form-control" onblur="CheckThis(this)" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        </td>
     </tr>
     <tr>
         <td>Expender or Income ?</td>
-        <td><input id="expender"  type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
+        <td><input id="expender"   type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
         Expender<br />
             <input type="radio"  name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
             Income
@@ -44,7 +51,6 @@
     <script>
         var test = document.getElementById("expender");
         ShowCorrectSelect(test);
-        
         function ShowCorrectSelect(element) {
             $("#type").empty();
             let urlLink;
@@ -80,6 +86,8 @@
                 let text = document.createTextNode("* This field is required");
                 let par = document.createElement("p");
                 par.setAttribute("id", "req");
+                par.setAttribute("class", "req");
+                
                 par.appendChild(text);
                 element.parentElement.appendChild(par);
             }

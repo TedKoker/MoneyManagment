@@ -2,10 +2,11 @@
     List<UserInfo> listOfAll = ViewBag.listOfAll;
     int dateMounth = ViewBag.dateMounth;
     int dateYear = ViewBag.dateYear;
+    int totalBlance = ViewBag.totalBlance;
 }
 <style>
     tr:hover {
-    background-color: antiquewhite;
+    background-color: rgba(61, 61, 255, 0.24);
     }
     tr:hover.warning{
         background-color:red;
@@ -14,8 +15,11 @@
         
     }
 
-    tr:hover.warning a{
+    tr:hover.redWarning {
         cursor: pointer;
+        background-color:red;
+        color:white;
+        font-weight:bold;
     }
 
     i {
@@ -24,45 +28,60 @@
     
     body{
         cursor: default;
+        background-color:#ccf2ff;
     }
 </style>
+<div style=" background-color:white; margin-top:70px;" >
+    <div style="min-height:300px;">
+        <table style="width:100%; font-size:1.1em; text-align: center;" class="table">
+            @foreach (UserInfo info in listOfAll)
+            {
+                <tr>
+                    <td width="10%">@info.Date.ToString("dd/MM/yy")</td>
+                    <td width="10%">@info.Sum</td>
+                    <td width="10%">@info.ExpenderOrIncome</td>
+                    <td width="15%">@info.Type</td>
+                    <td width="40%" style="text-align:left">@info.FurtherInformation</td>
+                    <td width="15%" onmouseover="TurnToWarning(this)" onmouseout="OffWarning(this)"><a onclick="DeleteFromUserInfo(this)">Click To Delete</a></td>
+                    <td style="visibility:hidden">@info.InfoID</td>
+                </tr>
+            }
+        <tr style=" font-weight:600">
+            <td style="color:darkblue;">Total Sum</td>
+            @if (totalBlance < 0)
+            {
+                <td style="color:red">@totalBlance</td>
+            }
+            @if (totalBlance >= 0)
+            {
+                <td style="color:#00cc33">@totalBlance</td>
+            }
+        </tr>
+        </table>
+    </div>
 
-<div style="min-height:300px;">
-    <table style="width:100%; font-size:1.1em; text-align: center;" class="table">
-        @foreach (UserInfo info in listOfAll)
+    <div style="text-align: center;">
+        <!--Fix possition through this <div>-->
+        <i class="fas fa-angle-double-left" style="cursor:pointer" onclick="prevPage()">  </i>
+        <span id="mounth">@dateMounth</span>/<span id="year">@dateYear</span>
+        @if (dateMounth < DateTime.Now.Month || dateYear < DateTime.Now.Year)
         {
-            <tr>
-                <td width="10%">@info.Date.ToString("dd/MM/yy")</td>
-                <td width="10%">@info.Sum</td>
-                <td width="10%">@info.ExpenderOrIncome</td>
-                <td width="15%">@info.Type</td>
-                <td width="40%">@info.FurtherInformation</td>
-                <td width="15%" onmouseover="TurnToWarning(this)" onmouseout="OffWarning(this)"><a onclick="DeleteFromUserInfo(this)">Click To Delete</a></td>
-                <td style="visibility:hidden">@info.InfoID</td>
-            </tr>
+            <i class="fas fa-angle-double-right" style="cursor:pointer" onclick="nextPage()"></i>
         }
-    </table>
+    </div>
 </div>
-
-<div style="text-align: center"><!--Fix possition through this <div>-->
-    <i class="fas fa-angle-double-left" style="cursor:pointer" onclick="prevPage()">  </i>
-    <span id="mounth">@dateMounth</span>/<span id="year">@dateYear</span>
-    @if (dateMounth < DateTime.Now.Month || dateYear<DateTime.Now.Year)
-    {
-        <i class="fas fa-angle-double-right" style="cursor:pointer" onclick="nextPage()"></i>
-    }
-</div>
-
 <script>
-    
+
     function DeleteFromUserInfo(element) {
-        var infoId = element.parentNode.nextSibling.nextSibling.innerHTML;
-        location.replace("/Personal/DeleteFromUserrInfo?infoId=" + infoId);
+        if (window.confirm("Are you sure you want to delete it?")) {
+            var infoId = element.parentNode.nextSibling.nextSibling.innerHTML;
+            location.replace("/Personal/DeleteFromUserrInfo?infoId=" + infoId);
+        }
     }
 
     function TurnToWarning(element) {
         var newStyle = element.parentNode;
-        newStyle.setAttribute("class", "warning");
+        newStyle.setAttribute("class", "redWarning");
     }
 
     function OffWarning(element) {

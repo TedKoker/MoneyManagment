@@ -36,3 +36,4 @@ C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\obj\Debug\netcoreapp2.
 C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\obj\Debug\netcoreapp2.1\Razor\Views\Personal\AddNewInfo.g.cshtml.cs
 C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\obj\Debug\netcoreapp2.1\Razor\Views\Personal\newOfAddingInfo.g.cshtml.cs
 C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\97252\source\repos\MoneyManagment\MoneyManagment\obj\Debug\netcoreapp2.1\Razor\Views\Shared\test.g.cshtml.cs

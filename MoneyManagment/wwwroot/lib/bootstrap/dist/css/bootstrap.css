@@ -48,6 +48,7 @@ a {
 a:active,
 a:hover {
   outline: 0;
+
 }
 abbr[title] {
   border-bottom: none;
@@ -4293,6 +4294,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-fixed-top,
 .navbar-fixed-bottom {
   position: fixed;
+  top: 0;
   right: 0;
   left: 0;
   z-index: 1030;
@@ -4315,7 +4317,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-fixed-top {
   top: 0;
-  border-width: 0 0 1px;
+  
 }
 .navbar-fixed-bottom {
   bottom: 0;

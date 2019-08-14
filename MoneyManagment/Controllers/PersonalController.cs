@@ -24,14 +24,26 @@ namespace MoneyManagment.Controllers
 
         public IActionResult Index(int? mounth, int? year)
         {
+            int totalBlance = 0;
+
             if (mounth == null)
                 mounth = DateTime.Now.Month;
             if (year == null)
                 year = DateTime.Now.Year;
             string correntUserId= UserManager.GetUserId(HttpContext.User);
             List<UserInfo> listOfAll = new List<UserInfo>();
-            foreach (UserInfo info in Context.UsersIndo.Where(u => u.Id == correntUserId).Where(u=>u.Date.Month==mounth).Where(u=>u.Date.Year==year))
+            foreach (UserInfo info in Context.UsersIndo.Where(u => u.Id == correntUserId).Where(u => u.Date.Month == mounth).Where(u => u.Date.Year == year))
+            {
                 listOfAll.Add(info);
+            }
+            foreach(UserInfo item in listOfAll)
+            {
+                if (item.ExpenderOrIncome.ToLower() == "income")
+                    totalBlance += item.Sum;
+                else
+                    totalBlance -= item.Sum;
+            }
+            ViewBag.totalBlance = totalBlance;
             ViewBag.listOfAll = listOfAll;
             ViewBag.dateMounth = mounth;
             ViewBag.dateYear = year;
