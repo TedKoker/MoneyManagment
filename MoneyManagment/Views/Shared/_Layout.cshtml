@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <html>
 <head>
     <meta charset="utf-8" />
@@ -24,13 +27,19 @@
             z-index: auto;
             top: 0;
             left: 0;
+            font-size: 1.2em;
         }
+
+        body{
+            font-size: 1.5em;
+        }
+
     </style>
 </head>
 
 
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top testThis" style="background-color:darkblue" >
+    <nav class="navbar navbar-inverse navbar-fixed-top testThis" style="background-color:darkblue">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -46,13 +55,18 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-area="" asp-controller="Personal" asp-action="Index">Expenders & Incomes</a></li>
+                        <li><a asp-area="" asp-controller="Personal" asp-action="newOfAddingInfo">Add Info</a></li>
+                    }
                 </ul>
-                <partial name="_LoginPartial" />
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
-        
+
     </nav>
-    
+
     <partial name="_CookieConsentPartial" />
 
     <div class="container body-content">
@@ -86,4 +100,5 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+
 </html>

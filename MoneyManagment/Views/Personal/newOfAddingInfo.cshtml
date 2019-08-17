@@ -7,47 +7,69 @@
         cursor: default;
     }
 
+    .formDiv{
+        margin-top:70px;
+    }
+
     p.req{
-        color:rgba(255, 5, 5, 1);
+        color:red;
+    }
+    input[type="date"],
+     input[type="number"],
+    input[type="submit"]
+   {
+        font-size:1em;
+    }
+    #type{
+        font-size:1em;
+    }
+
+    textarea.form-control{
+        font-size:1em;
     }
     
 </style>
 
 @using (Html.BeginForm("NewItem", "Personal", FormMethod.Post, new { onsubmit = "return IsLegalForm()" }))
 {
-<table class="table" style="background-color:white">
-    <tr>
-        <td><span>Date:</span></td>
-        <!--enter the fool calender-->
-        <td>
-            <input type="date" class="form-control" onblur="CheckThis(this)" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-        </td>
-    </tr>
-    <tr>
-        <td>Expender or Income ?</td>
-        <td><input id="expender"   type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
-        Expender<br />
-            <input type="radio"  name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
-            Income
-        </td>
-    </tr>
-    <tr>
-        <td>Please select a reason</td>
-        <td><select id="type" name="type" class="browser-default custom-select"></select>
-        <p style="display:inline" onclick="AddToList(this)"> add</p></td>
-    </tr> 
-    <tr>
-        <td>Sum: </td>
-        <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
-    </tr>
-    <tr>
-        <td>Further information:</td>
-        <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
-    </tr>
-    <tr>
-        <td><input type="submit" class="btn btn-primary" value="submit" /></td>
-    </tr>
-</table>
+<div class="formDiv">
+    <table class="table" style="background-color:white">
+        <tr>
+            <td><span>Date:</span></td>
+            <!--enter the fool calender-->
+            <td>
+                <input type="date" class="form-control" onblur="CheckThis(this)" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            </td>
+        </tr>
+        <tr>
+            <td>Expender or Income ?</td>
+            <td>
+                <input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
+                Expender<br />
+                <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
+                Income
+            </td>
+        </tr>
+        <tr>
+            <td>Please select a reason</td>
+            <td>
+                <select id="type" name="type" class="browser-default custom-select"></select>
+                <p style="display:inline" onclick="AddToList(this)"> add</p>
+            </td>
+        </tr>
+        <tr>
+            <td>Sum: </td>
+            <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
+        </tr>
+        <tr>
+            <td>Further information:</td>
+            <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="btn btn-primary" value="submit" /></td>
+        </tr>
+    </table>
+</div>
     <script>
         var test = document.getElementById("expender");
         ShowCorrectSelect(test);
