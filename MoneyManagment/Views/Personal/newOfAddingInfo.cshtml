@@ -1,78 +1,122 @@
-﻿<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-        crossorigin="anonymous"></script>
+﻿
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
 <style>
-    body{
-        background-color:#ccf2ff;
+    body {
+        background-color: #ccf2ff;
         cursor: default;
     }
-
-    .formDiv{
-        margin-top:70px;
+    .box-hidde{
+        display:none;
+        position:fixed;
+        z-index:1;
+        top:0;
+        left:0;
+        background-color:navajowhite;
     }
 
-    p.req{
-        color:red;
+    .box-show{
+        display:block;
+        
     }
+    .formDiv {
+        margin-top: 70px;
+    }
+
+    p.req {
+        color: red;
+    }
+
     input[type="date"],
-     input[type="number"],
-    input[type="submit"]
-   {
-        font-size:1em;
-    }
-    #type{
-        font-size:1em;
+    input[type="number"],
+    input[type="submit"],
+    input[type="text"]{
+        font-size: 1em;
     }
 
-    textarea.form-control{
-        font-size:1em;
+    #type {
+        font-size: 1em;
     }
-    
+
+    textarea.form-control {
+        font-size: 1em;
+    }
+
+    div#box input[type="number"]{
+        width:50px;
+        background-color:antiquewhite;
+        margin:10px 5px 10px 5px;
+    }
 </style>
 
 @using (Html.BeginForm("NewItem", "Personal", FormMethod.Post, new { onsubmit = "return IsLegalForm()" }))
 {
-<div class="formDiv">
-    <table class="table" style="background-color:white">
-        <tr>
-            <td><span>Date:</span></td>
-            <!--enter the fool calender-->
-            <td>
-                <input type="date" class="form-control" onblur="CheckThis(this)" name="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-            </td>
-        </tr>
-        <tr>
-            <td>Expender or Income ?</td>
-            <td>
-                <input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
-                Expender<br />
-                <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
-                Income
-            </td>
-        </tr>
-        <tr>
-            <td>Please select a reason</td>
-            <td>
-                <select id="type" name="type" class="browser-default custom-select"></select>
-                <p style="display:inline" onclick="AddToList(this)"> add</p>
-            </td>
-        </tr>
-        <tr>
-            <td>Sum: </td>
-            <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
-        </tr>
-        <tr>
-            <td>Further information:</td>
-            <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
-        </tr>
-        <tr>
-            <td><input type="submit" class="btn btn-primary" value="submit" /></td>
-        </tr>
-    </table>
-</div>
+    <div class="formDiv">
+    <div class="box-hidde" id="box">
+        <input type="number" id="day" placeholder="Day"/>/<input type="number" id="month" placeholder="Month" min="1" max="12" maxlength="2" />/<input type="number" id="year" placeholder="Year" maxlength="4" /><br />
+        <input type="button" value="Add" onclick="updateDate()"/>
+    </div>
+        <table class="table" style="background-color:white">
+            <tr>
+                <td><span>Date:</span></td>
+                <!--enter the fool calender-->
+                <td>
+                    
+                    <input type="text" onfocus="OpenDateBox(this)" class="form-control" id="date" name="date" value="@DateTime.Now.ToString("dd/MM/yyyy")"/>              
+                </td>
+            </tr>
+            <tr>
+                <td>Expender or Income ?</td>
+                <td>
+                    <input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
+                    Expender<br />
+                    <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
+                    Income
+                </td>
+            </tr>
+            <tr>
+                <td>Please select a reason</td>
+                <td>
+                    <select id="type" name="type" class="browser-default custom-select"></select>
+                    <p style="display:inline" onclick="AddToList(this)"> add</p>
+                </td>
+            </tr>
+            <tr>
+                <td>Sum: </td>
+                <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
+            </tr>
+            <tr>
+                <td>Further information:</td>
+                <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
+            </tr>
+            <tr>
+                <td><input type="submit" class="btn btn-primary" value="submit" /></td>
+            </tr>
+        </table>
+    </div>
     <script>
         var test = document.getElementById("expender");
         ShowCorrectSelect(test);
+
+        function OpenDateBox(element) {
+            document.getElementById("box").classList.add('box-show');
+        }
+        //run all the check in the function
+        function updateDate(){
+            let day = document.getElementById("day").value;
+            let month = document.getElementById("month").value;
+            let year = document.getElementById("year").value;
+            let date = day + "/" + month + "/" + year;
+            let dateOfDate = new Date(date);
+            if (dateOfDate.getDay() !== NaN) {
+                if (day < 1 || day > 31) { }
+                if (month < 1 || month > 12) { }
+                if (year.length != 4) {}
+            }
+            
+        }
         function ShowCorrectSelect(element) {
             $("#type").empty();
             let urlLink;
@@ -95,84 +139,84 @@
             });
 
         }
-    function IsLegalForm() {
-        if (document.getElementById("req") === null)
-            return true;
-        else
-            return false;
+        function IsLegalForm() {
+            if (document.getElementById("req") === null)
+                return true;
+            else
+                return false;
         }
 
-    function CheckThis(element) {
-        if (element.value === null || element.value === "") {
-            if (element.parentElement.lastChild === element) {
-                let text = document.createTextNode("* This field is required");
-                let par = document.createElement("p");
-                par.setAttribute("id", "req");
-                par.setAttribute("class", "req");
-                
-                par.appendChild(text);
-                element.parentElement.appendChild(par);
-            }
+        function CheckThis(element) {
+            if (element.value === null || element.value === "") {
+                if (element.parentElement.lastChild === element) {
+                    let text = document.createTextNode("* This field is required");
+                    let par = document.createElement("p");
+                    par.setAttribute("id", "req");
+                    par.setAttribute("class", "req");
+
+                    par.appendChild(text);
+                    element.parentElement.appendChild(par);
+                }
             }
             else {
                 let par = element.parentElement.lastChild;
-                if(par.id==="req")
+                if (par.id === "req")
                     element.parentElement.removeChild(par);
             }
 
         }
-    function AddToList(element) {
-        var tableRow = element.parentNode;
-        tableRow.removeChild(element);
+        function AddToList(element) {
+            var tableRow = element.parentNode;
+            tableRow.removeChild(element);
 
-        var textInput = document.createElement("input");
-        textInput.setAttribute("type", "text");
-        textInput.setAttribute("class", "form-control");
-        textInput.setAttribute("placeholder", "Enter the new reson");
-        textInput.setAttribute("id", "removeThis");
+            var textInput = document.createElement("input");
+            textInput.setAttribute("type", "text");
+            textInput.setAttribute("class", "form-control");
+            textInput.setAttribute("placeholder", "Enter the new reson");
+            textInput.setAttribute("id", "removeThis");
 
-        var addButton = document.createElement("p");
-        addButton.appendChild(document.createTextNode("add to list"));
-        addButton.setAttribute("style", "display:inline");
-        addButton.setAttribute("onclick", "SendToDatabase(this)");
-        addButton.setAttribute("id", "removeThis");
+            var addButton = document.createElement("p");
+            addButton.appendChild(document.createTextNode("add to list"));
+            addButton.setAttribute("style", "display:inline");
+            addButton.setAttribute("onclick", "SendToDatabase(this)");
+            addButton.setAttribute("id", "removeThis");
 
-        var deleteButton = document.createElement("p");
-        deleteButton.appendChild(document.createTextNode("Undo"));
-        deleteButton.setAttribute("style", "display:inline");
-        deleteButton.setAttribute("onclick", "Minimize(this)");
-        deleteButton.setAttribute("id", "removeThis");
+            var deleteButton = document.createElement("p");
+            deleteButton.appendChild(document.createTextNode("Undo"));
+            deleteButton.setAttribute("style", "display:inline");
+            deleteButton.setAttribute("onclick", "Minimize(this)");
+            deleteButton.setAttribute("id", "removeThis");
 
-        var breake = document.createElement("br");
-        breake.setAttribute("id", "removeThis");
+            var breake = document.createElement("br");
+            breake.setAttribute("id", "removeThis");
 
-        tableRow.appendChild(textInput);
-        tableRow.appendChild(addButton);
-        tableRow.appendChild(breake);
-        tableRow.appendChild(deleteButton);
-    }
+            tableRow.appendChild(textInput);
+            tableRow.appendChild(addButton);
+            tableRow.appendChild(breake);
+            tableRow.appendChild(deleteButton);
+        }
 
-    function SendToDatabase(element) {
-        var reson = element.previousSibling.value;
-        var expenderOrIncome;
-        if (document.getElementById("expender").checked)
-            expenderOrIncome = "expender";
-        else
-            expenderOrIncome = "income";
-        location.replace("/Personal/AddToReasonsList?reson=" + reson+"&&expenderOrIncome="+expenderOrIncome);
-    }
+        function SendToDatabase(element) {
+            var reson = element.previousSibling.value;
+            var expenderOrIncome;
+            if (document.getElementById("expender").checked)
+                expenderOrIncome = "expender";
+            else
+                expenderOrIncome = "income";
+            location.replace("/Personal/AddToReasonsList?reson=" + reson + "&&expenderOrIncome=" + expenderOrIncome);
+        }
 
-    function Minimize(element) {
-        var tableRow = element.parentNode;
-        while (document.getElementById("removeThis") !== null)
-            tableRow.removeChild(document.getElementById("removeThis"));
+        function Minimize(element) {
+            var tableRow = element.parentNode;
+            while (document.getElementById("removeThis") !== null)
+                tableRow.removeChild(document.getElementById("removeThis"));
 
-        var par = document.createElement("p");
-        par.appendChild(document.createTextNode("add"));
-        par.setAttribute("style", "display:inline");
-        par.setAttribute("onclick", "AddToList(this)");
+            var par = document.createElement("p");
+            par.appendChild(document.createTextNode("add"));
+            par.setAttribute("style", "display:inline");
+            par.setAttribute("onclick", "AddToList(this)");
 
-        tableRow.appendChild(par);
-    }
+            tableRow.appendChild(par);
+        }
     </script>
 }
