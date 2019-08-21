@@ -105,15 +105,31 @@
         }
         //run all the check in the function
         function updateDate(){
-            let day = document.getElementById("day").value;
-            let month = document.getElementById("month").value;
-            let year = document.getElementById("year").value;
-            let date = day + "/" + month + "/" + year;
-            let dateOfDate = new Date(date);
-            if (dateOfDate.getDay() !== NaN) {
-                if (day < 1 || day > 31) { }
-                if (month < 1 || month > 12) { }
-                if (year.length != 4) {}
+            let day = document.getElementById("day");
+            let month = document.getElementById("month");
+            let year = document.getElementById("year");
+            let date = year.value + "-" + month.value + "-" + day.value;
+            let dateOfDate = new Date(date); //var date2 = new Date('1995-12-17T03:24:00');
+            if (day.value < 1 || day.value > 31 || dateOfDate.getDate() != day.value) {
+                day.setAttribute("style", "background-color: red");
+            }
+            else {
+                day.removeAttribute("style");
+            }
+            if (month.value < 1 || month.value > 12) {
+                month.setAttribute("style", "background-color: red");
+            }
+            else {
+                month.removeAttribute("style");
+            }
+            if (year.value.length != 4) {
+                year.setAttribute("style", "background-color: red");
+            }
+            else {
+                year.removeAttribute("style");
+            }
+            if (day.getAttribute('style') === null && month.getAttribute('style') === null && year.getAttribute('style') === null) {
+                alert('OK');
             }
             
         }
