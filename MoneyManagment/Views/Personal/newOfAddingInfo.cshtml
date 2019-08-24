@@ -49,7 +49,7 @@
     }
 
     div#box input[type="number"]{
-        width:50px;
+        width:10%;
         background-color:#ccf2ff;
         margin:10px 5px 10px 5px;
         font-size:1.1em;
@@ -78,6 +78,7 @@
             <p>Please enter your date</p>
             <input type="number" id="day" placeholder="Day" />/<input type="number" id="month" placeholder="Month" min="1" max="12" maxlength="2" />/<input type="number" id="year" placeholder="Year" maxlength="4" /><br />
             <input type="button" class="btn btn-primary" style="font-size:1em" value="Add" onclick="updateDate()" />
+            <input type="button" class="btn btn-primary" style="font-size:1em" value="Cancel" onclick="document.getElementById('box').classList.remove('box-show'); document.getElementById('formTable').classList.remove('blur')" />
         </div>
     </div>
         <table id="formTable" class="table" style="background-color:white">
@@ -123,14 +124,20 @@
         function OpenDateBox(element) {
             document.getElementById("box").classList.add('box-show');
             document.getElementById("formTable").classList.add("blur");
+            let dateInForm = document.getElementById("date").value;
+            document.getElementById("day").value = dateInForm.slice(0, dateInForm.indexOf('/'));
+            dateInForm = dateInForm.slice(document.getElementById("day").value.length + 1, dateInForm.length);
+            document.getElementById("month").value = dateInForm.slice(0, dateInForm.indexOf('/'));
+            dateInForm = dateInForm.slice(document.getElementById("month").value.length + 1,dateInForm.length);
+            document.getElementById("year").value = dateInForm;
         }
-        //run all the check in the function
+
         function updateDate(){
             let day = document.getElementById("day");
             let month = document.getElementById("month");
             let year = document.getElementById("year");
             let date = year.value + "-" + month.value + "-" + day.value;
-            let dateOfDate = new Date(date); //var date2 = new Date('1995-12-17T03:24:00');
+            let dateOfDate = new Date(date); 
             if (day.value < 1 || day.value > 31 || dateOfDate.getDate() != day.value) {
                 day.setAttribute("style", "background-color: red");
             }
@@ -151,6 +158,8 @@
             }
             if (day.getAttribute('style') === null && month.getAttribute('style') === null && year.getAttribute('style') === null) {
                 if (dateOfDate <= new Date()) {
+                    if (month.value.length !== 2) month.value = correctDateNember(month.value);
+                    if (day.value.length !== 2) day.value = correctDateNember(day.value);
                     let updatedDate = day.value + "/" + month.value + "/" + year.value;
                     document.getElementById("date").value = updatedDate;
                     document.getElementById("box").classList.remove("box-show");
@@ -164,6 +173,19 @@
             }
 
             
+        }
+
+        function correctDateNember(number){
+            let correctNumber = ""; 
+            number = "" + number;
+            for (let i = 0; i < number.length; i++) {
+                 if (number[i] !== "0") correctNumber = "" + correctNumber + number[i];
+            }
+
+            if (correctNumber.length < 2) {
+                correctNumber = "0" + correctNumber;
+            }
+            return correctNumber;
         }
         function ShowCorrectSelect(element) {
             $("#type").empty();
