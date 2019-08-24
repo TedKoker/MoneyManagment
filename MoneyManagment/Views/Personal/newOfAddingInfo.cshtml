@@ -12,9 +12,13 @@
         display:none;
         position:fixed;
         z-index:1;
-        top:0;
-        left:0;
-        background-color:navajowhite;
+        top:25%;
+        left:50%;
+        background-color:#ccf2ff;
+        transform: translate(-50%, -50%);
+        border-radius: 20px;
+        min-width:40%;
+        min-height:20%;
     }
 
     .box-show{
@@ -46,8 +50,23 @@
 
     div#box input[type="number"]{
         width:50px;
-        background-color:antiquewhite;
+        background-color:#ccf2ff;
         margin:10px 5px 10px 5px;
+        font-size:1.1em;
+        color:#00004d;
+    }
+
+    div#box div{
+        text-align:center;
+    }
+    div#box p{
+        font-size:1.2em;
+        color:#00004d;
+    }
+
+    .blur{
+        filter: blur(8px);
+        pointer-events: none;
     }
 </style>
 
@@ -55,15 +74,16 @@
 {
     <div class="formDiv">
     <div class="box-hidde" id="box">
-        <input type="number" id="day" placeholder="Day"/>/<input type="number" id="month" placeholder="Month" min="1" max="12" maxlength="2" />/<input type="number" id="year" placeholder="Year" maxlength="4" /><br />
-        <input type="button" value="Add" onclick="updateDate()"/>
+        <div>
+            <p>Please enter your date</p>
+            <input type="number" id="day" placeholder="Day" />/<input type="number" id="month" placeholder="Month" min="1" max="12" maxlength="2" />/<input type="number" id="year" placeholder="Year" maxlength="4" /><br />
+            <input type="button" class="btn btn-primary" style="font-size:1em" value="Add" onclick="updateDate()" />
+        </div>
     </div>
-        <table class="table" style="background-color:white">
+        <table id="formTable" class="table" style="background-color:white">
             <tr>
                 <td><span>Date:</span></td>
-                <!--enter the fool calender-->
                 <td>
-                    
                     <input type="text" onfocus="OpenDateBox(this)" class="form-control" id="date" name="date" value="@DateTime.Now.ToString("dd/MM/yyyy")"/>              
                 </td>
             </tr>
@@ -102,6 +122,7 @@
 
         function OpenDateBox(element) {
             document.getElementById("box").classList.add('box-show');
+            document.getElementById("formTable").classList.add("blur");
         }
         //run all the check in the function
         function updateDate(){
@@ -116,7 +137,7 @@
             else {
                 day.removeAttribute("style");
             }
-            if (month.value < 1 || month.value > 12) {
+              if (month.value < 1 || month.value > 12) {
                 month.setAttribute("style", "background-color: red");
             }
             else {
@@ -129,8 +150,19 @@
                 year.removeAttribute("style");
             }
             if (day.getAttribute('style') === null && month.getAttribute('style') === null && year.getAttribute('style') === null) {
-                alert('OK');
+                if (dateOfDate <= new Date()) {
+                    let updatedDate = day.value + "/" + month.value + "/" + year.value;
+                    document.getElementById("date").value = updatedDate;
+                    document.getElementById("box").classList.remove("box-show");
+                    document.getElementById("formTable").classList.remove("blur")
+                }
+                else {
+                    day.setAttribute("style", "background-color: red");
+                    month.setAttribute("style", "background-color: red");
+                    year.setAttribute("style", "background-color: red");
+                }
             }
+
             
         }
         function ShowCorrectSelect(element) {
