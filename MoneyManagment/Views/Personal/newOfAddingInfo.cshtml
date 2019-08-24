@@ -72,7 +72,7 @@
 
 @using (Html.BeginForm("NewItem", "Personal", FormMethod.Post, new { onsubmit = "return IsLegalForm()" }))
 {
-    <div class="formDiv">
+<div class="formDiv">
     <div class="box-hidde" id="box">
         <div>
             <p>Please enter your date</p>
@@ -81,45 +81,57 @@
             <input type="button" class="btn btn-primary" style="font-size:1em" value="Cancel" onclick="document.getElementById('box').classList.remove('box-show'); document.getElementById('formTable').classList.remove('blur')" />
         </div>
     </div>
-        <table id="formTable" class="table" style="background-color:white">
-            <tr>
-                <td><span>Date:</span></td>
-                <td>
-                    <input type="text" onfocus="OpenDateBox(this)" class="form-control" id="date" name="date" value="@DateTime.Now.ToString("dd/MM/yyyy")"/>              
-                </td>
-            </tr>
-            <tr>
-                <td>Expender or Income ?</td>
-                <td>
-                    <input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
-                    Expender<br />
-                    <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
-                    Income
-                </td>
-            </tr>
-            <tr>
-                <td>Please select a reason</td>
-                <td>
-                    <select id="type" name="type" class="browser-default custom-select"></select>
-                    <p style="display:inline" onclick="AddToList(this)"> add</p>
-                </td>
-            </tr>
-            <tr>
-                <td>Sum: </td>
-                <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
-            </tr>
-            <tr>
-                <td>Further information:</td>
-                <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
-            </tr>
-            <tr>
-                <td><input type="submit" class="btn btn-primary" value="submit" /></td>
-            </tr>
-        </table>
-    </div>
+    <table id="formTable" class="table" style="background-color:white">
+        <tr>
+            <td><span>Date:</span></td>
+            <td>
+                <input type="text" onfocus="OpenDateBox(this)" class="form-control" id="date" name="date" value="@DateTime.Now.ToString("dd/MM/yyyy")" />
+            </td>
+        </tr>
+        <tr>
+            <td>Expender or Income ?</td>
+            <td>
+                <input id="expender" type="radio" name="expenderOrIncome" value="expender" checked="checked" onclick="ShowCorrectSelect(this)" />
+                Expender<br />
+                <input type="radio" name="expenderOrIncome" value="income" onclick="ShowCorrectSelect(this)" />
+                Income
+            </td>
+        </tr>
+        <tr>
+            <td>Please select a reason</td>
+            <td>
+                <select id="type" name="type" class="browser-default custom-select"></select>
+                <p style="display:inline" onclick="AddToList(this)"> add</p>
+            </td>
+        </tr>
+        <tr>
+            <td>Sum: </td>
+            <td><input class="form-control" onblur="CheckThis(this)" type="number" name="sum" value="100" /></td>
+        </tr>
+        <tr>
+            <td>Further information:</td>
+            <td><textarea class="form-control" rows="4" cols="50" name="furtherInformation"></textarea></td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="btn btn-primary" value="submit" /></td>
+        </tr>
+    </table>
+</div>
     <script>
         var test = document.getElementById("expender");
         ShowCorrectSelect(test);
+
+        function changeTheField(){
+            let dateText = document.getElementById("date").value;
+            let dateField = document.getElementById("date");
+            let day = dateText.slice(0, dateText.indexOf('/'));
+            dateText = dateText.slice(day.length + 1, dateText.length);
+            let month = dateText.slice(0, dateText.indexOf('/'));
+            dateText = dateText.slice(month.length + 1);
+            let year = dateText;
+            dateField.value = year + "-" + month + "-" + day;
+            dateField.type = "date";
+        }
 
         function OpenDateBox(element) {
             document.getElementById("box").classList.add('box-show');
@@ -210,8 +222,11 @@
 
         }
         function IsLegalForm() {
-            if (document.getElementById("req") === null)
+            if (document.getElementById("req") === null) {
+                changeTheField();
                 return true;
+            }
+                
             else
                 return false;
         }
